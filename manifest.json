@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Cambridge dictionary plugin for Chrome",
+  "description": "Cambridge dictionary plugin for Chrome",
+  "version": "1.0",
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "Cambridge dictionary plugin for Chrome"
+  },
+  "content_scripts": [
+    {
+      "matches": ["\u003Call_urls>"],
+      "js": ["index.js"],
+      "css": ["index.css"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": ["icon.png"]
+}
