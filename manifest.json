@@ -1,11 +1,11 @@
 {
   "manifest_version": 2,
-  "name": "Cambridge dictionary plugin for Chrome",
-  "description": "Cambridge dictionary plugin for Chrome",
+  "name": "Double click plugin for cambridge dictionary",
+  "description": "Double click plugin for cambridge dictionary",
   "version": "1.0",
   "browser_action": {
     "default_icon": "icon.png",
-    "default_title": "Cambridge dictionary plugin for Chrome"
+    "default_title": "Double click plugin for cambridge dictionary"
   },
   "content_scripts": [
     {

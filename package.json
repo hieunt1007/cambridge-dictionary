@@ -2,7 +2,7 @@
   "name": "cambridge-dictionary",
   "version": "1.0.0",
   "author": "hieu nguyen",
-  "description": "Double click for cambridge dictionary",
+  "description": "Double click plugin for cambridge dictionary",
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js"
@@ -13,6 +13,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "copy-webpack-plugin": "^4.4.1",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "zip-webpack-plugin": "^2.1.0"
   }
 }

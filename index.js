@@ -21,7 +21,7 @@
       let bcr, selection = window.getSelection(),
         selectedText = selection.toString().trim(),
         relative = document.body.parentNode.getBoundingClientRect(),
-        offset = -2
+        offset = -1
 
       if (!selectedText || e.target === cambridgeEle) {
         isAdded && body.removeChild(cambridgeEle) && (isAdded = false)
@@ -35,12 +35,13 @@
 
       bcr = selection.getRangeAt(0).getBoundingClientRect()
       if (Math.abs(e.clientY - bcr.top) > bcr.bottom - e.clientY) {
-        offset = bcr.height + 26
+        // icon will be shown on top
+        offset = bcr.height + 28
       }
       isAdded && body.removeChild(cambridgeEle) && (isAdded = false)
 
       cambridgeEle.style.top = `${bcr.bottom - relative.top - offset}px` //this will place ele below the selection
-      cambridgeEle.style.left = `${e.clientX + html.scrollLeft - 10}px` //this will place ele below the selection
+      cambridgeEle.style.left = `${e.clientX + html.scrollLeft - 12}px` //this will place ele below the selection
       cambridgeEle.onclick = (evt) => {
         body.removeChild(cambridgeEle) && (isAdded = false)
 
@@ -48,7 +49,7 @@
         evt.stopPropagation()
         evt.preventDefault()
         iframe = document.createElement('iframe')
-        iframe.src = WEBSITE_URL + selectedText
+        iframe.src = WEBSITE_URL + selectedText.toLocaleLowerCase()
         iframe.width = `${iframeWidth}px`
         iframe.height = '300px'
         iframe.style.position = 'absolute'

@@ -1,2 +1,2 @@
 # cambridge-dictionary
-Cambridge dictionary on Chrome plugin
+Double click plugin for cambridge dictionary

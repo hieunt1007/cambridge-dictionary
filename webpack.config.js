@@ -2,8 +2,9 @@ const path = require('path')
 const fs = require('fs')
 const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const ZipPlugin = require('zip-webpack-plugin')
 
-const TARGET = 'cambridge-dictionary'
+const TARGET_FOLDER = 'public'
 
 let deleteFolderRecursive = path => {
   if (fs.existsSync(path)) {
@@ -19,13 +20,14 @@ let deleteFolderRecursive = path => {
   }
 }
 
-deleteFolderRecursive(TARGET)
+deleteFolderRecursive(TARGET_FOLDER)
 
+const PATH_FOLDER = path.join(__dirname, TARGET_FOLDER)
 const config = {
   entry: './index.js',
   output: {
     filename: 'index.js',
-    path: path.resolve(__dirname, TARGET),
+    path: path.resolve(__dirname, TARGET_FOLDER),
   },
   module: {
     rules: [
@@ -35,10 +37,17 @@ const config = {
   plugins: [
     new webpack.optimize.UglifyJsPlugin(),
     new CopyWebpackPlugin([
-      {from: 'icon.png', to: path.join(__dirname, TARGET)},
-      {from: 'index.css', to: path.join(__dirname, TARGET)},
-      {from: 'manifest.json', to: path.join(__dirname, TARGET)},
-    ])
+      {from: 'icon.png', to: PATH_FOLDER},
+      {from: 'index.css', to: PATH_FOLDER},
+      {from: 'manifest.json', to: PATH_FOLDER},
+    ]),
+    new ZipPlugin({
+      path: PATH_FOLDER,
+      filename: 'cambridge-dictionary.zip',
+      zipOptions: {
+        forceZip64Format: true,
+      },
+    }),
   ],
 }
 module.exports = config
