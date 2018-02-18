@@ -52,6 +52,7 @@
         iframe.src = WEBSITE_URL + selectedText.toLocaleLowerCase()
         iframe.width = `${iframeWidth}px`
         iframe.height = '300px'
+        iframe.style.zIndex = 999999999
         iframe.style.position = 'absolute'
         iframe.style.top = `${bcr.bottom - relative.top - offset}px`
 
