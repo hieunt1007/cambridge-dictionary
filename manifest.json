@@ -7,13 +7,23 @@
     "default_icon": "icon.png",
     "default_title": "Double click plugin for cambridge dictionary"
   },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
   "content_scripts": [
     {
-      "matches": ["\u003Call_urls>"],
-      "js": ["index.js"],
-      "css": ["index.css"],
+      "matches": [
+        "\u003Call_urls>"
+      ],
+      "js": [
+        "index.js"
+      ],
+      "css": [
+        "index.css"
+      ],
       "all_frames": true
     }
-  ],
-  "web_accessible_resources": ["icon.png"]
+  ]
 }

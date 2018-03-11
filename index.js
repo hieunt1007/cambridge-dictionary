@@ -1,6 +1,9 @@
 (() => {
+  'use strict'
+
   const WEBSITE_URL = 'https://dictionary.cambridge.org/dictionary/english/'
   const iframeWidth = 450
+  const iframeHeight = 300
 
   let body = document.body,
     html = document.documentElement,
@@ -19,17 +22,13 @@
     }
     setTimeout(() => {
       let bcr, selection = window.getSelection(),
-        selectedText = selection.toString().trim(),
+        selectedText = selection.toString().replace(/[\.\*\?;!()\+,\[:\]<>^_`\[\]{}~\\\/\"\'=]/g,
+          ' ').trim(),
         relative = document.body.parentNode.getBoundingClientRect(),
         offset = -1
 
-      if (!selectedText || e.target === cambridgeEle) {
-        isAdded && body.removeChild(cambridgeEle) && (isAdded = false)
-        return
-      }
-      if (selectedText.includes(' ')) {
-        // don't handle multiple words
-        isAdded && body.removeChild(cambridgeEle) && (isAdded = false)
+      isAdded && body.removeChild(cambridgeEle) && (isAdded = false)
+      if (!selectedText || e.target === cambridgeEle || selectedText.includes(' ')) {
         return
       }
 
@@ -38,28 +37,32 @@
         // icon will be shown on top
         offset = bcr.height + 28
       }
-      isAdded && body.removeChild(cambridgeEle) && (isAdded = false)
 
       cambridgeEle.style.top = `${bcr.bottom - relative.top - offset}px` //this will place ele below the selection
       cambridgeEle.style.left = `${e.clientX + html.scrollLeft - 12}px` //this will place ele below the selection
       cambridgeEle.onclick = (evt) => {
         body.removeChild(cambridgeEle) && (isAdded = false)
 
-        selectedText = selectedText.replace(/[\.\*\?;!()\+,\[:\]<>^_`\[\]{}~\\\/\"\'=]/g, ' ')
         evt.stopPropagation()
         evt.preventDefault()
+
+        let offsetTop = bcr.bottom - relative.top - offset
+        if (offsetTop - html.scrollTop < iframeHeight) {
+          offsetTop += 27
+        } else if (offsetTop + iframeHeight > html.scrollTop) {
+          offsetTop -= iframeHeight
+        }
         iframe = document.createElement('iframe')
         iframe.src = WEBSITE_URL + selectedText.toLocaleLowerCase()
         iframe.width = `${iframeWidth}px`
-        iframe.height = '300px'
+        iframe.height = `${iframeHeight}px`
         iframe.style.zIndex = 999999999
         iframe.style.position = 'absolute'
-        iframe.style.top = `${bcr.bottom - relative.top - offset}px`
+        iframe.style.top = `${offsetTop}px`
 
         if (e.clientX + iframeWidth > body.clientWidth) {
           iframe.style.left = `${body.clientWidth + html.scrollLeft - iframeWidth}px`
-        }
-        else {
+        } else {
           iframe.style.left = `${e.clientX + html.scrollLeft - 10}px`
         }
         body.appendChild(iframe)
