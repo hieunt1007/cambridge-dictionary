@@ -38,6 +38,10 @@ const config = {
     new webpack.optimize.UglifyJsPlugin(),
     new CopyWebpackPlugin([
       {from: 'icon.png', to: PATH_FOLDER},
+      {from: 'icon48.png', to: PATH_FOLDER},
+      {from: 'icon128.png', to: PATH_FOLDER},
+      {from: 'popup.html', to: PATH_FOLDER},
+      {from: 'icon.png', to: PATH_FOLDER},
       {from: 'index.css', to: PATH_FOLDER},
       {from: 'manifest.json', to: PATH_FOLDER},
     ]),
