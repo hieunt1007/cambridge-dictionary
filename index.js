@@ -1,7 +1,17 @@
-(() => {
+(async() => {
   'use strict'
 
-  const WEBSITE_URL = 'https://dictionary.cambridge.org/dictionary/english/'
+  let dictionaryPromise = async() => {
+    return new Promise(resolve => {
+      chrome.storage.sync.get(['dictionary'], result => {
+        resolve(result.dictionary)
+      })
+    })
+  }
+
+  let dictionary = await dictionaryPromise()
+
+  const WEBSITE_URL = `https://dictionary.cambridge.org/search/${dictionary}/direct/`
   const iframeWidth = 450
   const iframeHeight = 300
 
@@ -53,7 +63,7 @@
           offsetTop -= iframeHeight
         }
         iframe = document.createElement('iframe')
-        iframe.src = WEBSITE_URL + selectedText.toLocaleLowerCase()
+        iframe.src = `${WEBSITE_URL}?q=${selectedText.toLocaleLowerCase()}`
         iframe.width = `${iframeWidth}px`
         iframe.height = `${iframeHeight}px`
         iframe.style.zIndex = 999999999
@@ -66,6 +76,7 @@
           iframe.style.left = `${e.clientX + html.scrollLeft - 10}px`
         }
         body.appendChild(iframe)
+        console.log(iframe.src)
       }
       body.appendChild(cambridgeEle) && (isAdded = true)
     })
