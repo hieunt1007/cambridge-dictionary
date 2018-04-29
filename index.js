@@ -1,10 +1,11 @@
+import 'babel-polyfill'
 (async() => {
   'use strict'
 
   let dictionaryPromise = async() => {
     return new Promise(resolve => {
       chrome.storage.sync.get(['dictionary'], result => {
-        resolve(result.dictionary)
+        resolve(result.dictionary || 'english')
       })
     })
   }

@@ -3,6 +3,7 @@ const fs = require('fs')
 const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ZipPlugin = require('zip-webpack-plugin')
+const WebpackBuildNotifierPlugin = require('webpack-build-notifier')
 
 const TARGET_FOLDER = 'public'
 
@@ -27,12 +28,12 @@ const config = {
   entry: './index.js',
   output: {
     filename: 'index.js',
-    path: path.resolve(__dirname, TARGET_FOLDER),
+    path: path.resolve(__dirname, TARGET_FOLDER)
   },
   module: {
     rules: [
-      {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-    ],
+      {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
+    ]
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin(),
@@ -45,15 +46,19 @@ const config = {
       {from: 'index.css', to: PATH_FOLDER},
       {from: 'manifest.json', to: PATH_FOLDER},
       {from: 'options.html', to: PATH_FOLDER},
-      {from: 'options.js', to: PATH_FOLDER},
+      {from: 'options.js', to: PATH_FOLDER}
     ]),
     new ZipPlugin({
       path: PATH_FOLDER,
       filename: 'cambridge-dictionary.zip',
       zipOptions: {
-        forceZip64Format: true,
-      },
+        forceZip64Format: true
+      }
     }),
-  ],
+    new WebpackBuildNotifierPlugin({
+      title: "Build success",
+      suppressSuccess: true
+    })
+  ]
 }
 module.exports = config
