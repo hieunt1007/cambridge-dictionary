@@ -44,6 +44,8 @@ const config = {
       {from: 'icon.png', to: PATH_FOLDER},
       {from: 'index.css', to: PATH_FOLDER},
       {from: 'manifest.json', to: PATH_FOLDER},
+      {from: 'options.html', to: PATH_FOLDER},
+      {from: 'options.js', to: PATH_FOLDER},
     ]),
     new ZipPlugin({
       path: PATH_FOLDER,
