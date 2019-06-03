@@ -64,3 +64,6 @@ typings/
 
 .idea/
 public/
+
+package-lock.json
+yarn.lock
